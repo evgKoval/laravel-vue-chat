@@ -18,10 +18,20 @@
 <body>
     <div id="app">
         <v-app>
-            <v-app-bar app></v-app-bar>
+            <v-navigation-drawer app>
+                <sidebar />
+            </v-navigation-drawer>
+
+            <v-app-bar app>
+                <v-toolbar-title>
+                    {{ config('app.name', 'Laravel') }}
+                </v-toolbar-title>
+            </v-app-bar>
 
             <v-main>
-                @yield('content')
+                <v-container fluid>
+                    <router-view></router-view>
+                </v-container>
             </v-main>
         </v-app>
     </div>
