@@ -1,5 +1,5 @@
 const mix = require('laravel-mix');
-require('vuetifyjs-mix-extension')
+require('vuetifyjs-mix-extension');
 
 /*
  |--------------------------------------------------------------------------
@@ -15,6 +15,5 @@ require('vuetifyjs-mix-extension')
 mix.js('resources/js/app.js', 'public/js')
     .vuetify('vuetify-loader')
     .vue({ version: 2 })
-    .postCss('resources/css/app.css', 'public/css', [
-        //
-    ]);
+    .postCss('resources/css/app.css', 'public/css', [])
+    .alias({ '@': 'resources/js' });
