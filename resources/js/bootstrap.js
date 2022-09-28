@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import store from '@/plugins/store';
 window._ = _;
 
 /**
@@ -11,6 +12,18 @@ import axios from 'axios';
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+
+window.axios.interceptors.response.use(
+    (response) => {
+        return response;
+    },
+    function (error) {
+        if (error.response.status === 401 || error.response.status === 419) {
+            store.dispatch("logout");
+        }
+        return Promise.reject(error.response);
+    }
+);
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
