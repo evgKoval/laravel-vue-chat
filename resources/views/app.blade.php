@@ -16,26 +16,7 @@
     <link rel="stylesheet" href="{{ mix('css/app.css') }}">
 </head>
 <body>
-    <div id="app">
-        <v-app>
-            <v-navigation-drawer app>
-                <sidebar />
-            </v-navigation-drawer>
-
-            <v-app-bar app>
-                <v-toolbar-title>
-                    {{ config('app.name', 'Laravel') }}
-                </v-toolbar-title>
-            </v-app-bar>
-
-            <v-main>
-                <v-container fluid>
-                    <router-view></router-view>
-                </v-container>
-            </v-main>
-        </v-app>
-    </div>
-
+    <div id="app"></div>
     <script src="{{ mix('js/app.js') }}" defer></script>
 </body>
 </html>
