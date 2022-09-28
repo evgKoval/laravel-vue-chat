@@ -39,6 +39,7 @@ const store = new Vuex.Store({
         },
         async logout({ commit }) {
             try {
+                commit("SET_APP_LOADING", true);
                 await AuthService.logout();
                 commit("SET_USER", null);
 
@@ -48,6 +49,8 @@ const store = new Vuex.Store({
             } catch (error) {
                 commit("SET_ERROR_MESSAGE", error.data.message);
                 commit("SET_SNACKBAR_SHOWN", true);
+            } finally {
+                commit("SET_APP_LOADING", false);
             }
         },
     },
