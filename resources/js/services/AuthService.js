@@ -15,4 +15,7 @@ export default {
     logout() {
         return axios.post("/logout");
     },
+    updateUser(payload) {
+        return axios.put("/user/profile-information", payload);
+    },
 };
