@@ -55,6 +55,7 @@
                     <v-btn
                         color="primary"
                         :disabled="!isFormValid"
+                        :loading="isEditButtonLoading"
                         text
                         @click="editUserData"
                     >
@@ -79,6 +80,7 @@ export default {
                 name: "",
                 email: "",
             },
+            isEditButtonLoading: false,
             nameRules: [(v) => !!v || "Name is required"],
             emailRules: [
                 (v) => !!v || "E-mail is required",
@@ -90,13 +92,15 @@ export default {
         ...mapGetters(["user"]),
     },
     methods: {
-        ...mapActions(["logout"]),
+        ...mapActions(["logout", "editUser"]),
         openProfilePopup() {
             this.isPopupShown = true;
             Object.assign(this.form, this.user);
         },
-        editUserData() {
-            //
+        async editUserData() {
+            this.isEditButtonLoading = true;
+            await this.editUser(this.form);
+            this.isEditButtonLoading = false;
         },
     },
 };

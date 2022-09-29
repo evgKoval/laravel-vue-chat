@@ -14,7 +14,12 @@ const store = new Vuex.Store({
     },
     mutations: {
         SET_USER(state, user) {
-            state.user = user;
+            if (!user) {
+                state.user = null;
+                return;
+            }
+
+            state.user = Object.assign({}, user);
         },
         SET_APP_LOADING(state, loading) {
             state.isAppLoading = loading;
@@ -53,6 +58,15 @@ const store = new Vuex.Store({
                 commit("SET_APP_LOADING", false);
             }
         },
+        async editUser({ commit }, payload) {
+            try {
+                await AuthService.updateUser(payload);
+                commit("SET_USER", payload);
+            } catch (error) {
+                commit("SET_ERROR_MESSAGE", error.data.message);
+                commit("SET_SNACKBAR_SHOWN", true);
+            }
+        }
     },
     getters: {
         user(state) {

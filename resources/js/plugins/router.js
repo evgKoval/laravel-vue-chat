@@ -41,7 +41,7 @@ router.beforeEach(async (to, from, next) => {
 
     if (isAuthRequired && !user) {
         await store.dispatch("getUser");
-        redirectIfUserNotLogined(next);
+        redirectIfUserNotLogined(to, next);
     } else {
         next();
     }
@@ -49,7 +49,7 @@ router.beforeEach(async (to, from, next) => {
     store.commit('SET_APP_LOADING', false);
 });
 
-function redirectIfUserNotLogined(next) {
+function redirectIfUserNotLogined(to, next) {
     if (!store.getters["user"]) {
         next({
             path: "/login",
