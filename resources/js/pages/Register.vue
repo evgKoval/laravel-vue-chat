@@ -8,7 +8,7 @@
                 <v-col cols="12">
                     <v-text-field
                         v-model="form.name"
-                        :rules="nameRules"
+                        :rules="validationRules.name"
                         label="Name"
                         required
                     ></v-text-field>
@@ -16,7 +16,7 @@
                 <v-col cols="12">
                     <v-text-field
                         v-model="form.email"
-                        :rules="emailRules"
+                        :rules="validationRules.email"
                         label="E-mail"
                         required
                     ></v-text-field>
@@ -25,7 +25,7 @@
                     <v-text-field
                         type="password"
                         v-model="form.password"
-                        :rules="passwordRules"
+                        :rules="validationRules.password"
                         label="Password"
                         required
                     ></v-text-field>
@@ -34,7 +34,7 @@
                     <v-text-field
                         type="password"
                         v-model="form.password_confirmation"
-                        :rules="passwordRules"
+                        :rules="validationRules.password"
                         label="Confirm Password"
                         required
                     ></v-text-field>
@@ -58,6 +58,7 @@
 <script>
 import { mapMutations } from "vuex";
 import AuthService from "@/services/AuthService";
+import { name, email, password } from "@/utils/validationRules";
 
 export default {
     data() {
@@ -70,17 +71,11 @@ export default {
                 password: "",
                 password_confirmation: "",
             },
-            nameRules: [(v) => !!v || "Name is required"],
-            emailRules: [
-                (v) => !!v || "E-mail is required",
-                (v) => /.+@.+/.test(v) || "E-mail must be valid",
-            ],
-            passwordRules: [
-                (v) => !!v || "Password is required",
-                (v) =>
-                    v.length >= 8 ||
-                    "Password must be equal or more than 8 characters",
-            ],
+            validationRules: {
+                name,
+                email,
+                password,
+            },
         };
     },
     methods: {

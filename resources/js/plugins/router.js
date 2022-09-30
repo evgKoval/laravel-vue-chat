@@ -4,6 +4,8 @@ import store from '@/plugins/store';
 import Home from '@/pages/Home';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
+import ForgotPassword from '@/pages/ForgotPassword';
+import ResetPassword from '@/pages/ResetPassword';
 
 Vue.use(VueRouter);
 
@@ -25,6 +27,16 @@ const routes = [
         path: '/register',
         name: 'register',
         component: Register
+    },
+    {
+        path: '/forgot-password',
+        name: 'forgotPassword',
+        component: ForgotPassword,
+    },
+    {
+        path: "/reset-password",
+        name: "resetPassword",
+        component: ResetPassword,
     },
 ];
 

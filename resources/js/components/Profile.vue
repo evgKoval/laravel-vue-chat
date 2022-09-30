@@ -33,13 +33,13 @@
                     <v-form v-model="isFormValid">
                         <v-text-field
                             v-model="form.name"
-                            :rules="nameRules"
+                            :rules="validationRules.name"
                             label="Name"
                             required
                         ></v-text-field>
                         <v-text-field
                             v-model="form.email"
-                            :rules="emailRules"
+                            :rules="validationRules.email"
                             label="E-mail"
                             required
                         ></v-text-field>
@@ -69,6 +69,7 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import { name, email } from "@/utils/validationRules";
 
 export default {
     data() {
@@ -81,11 +82,10 @@ export default {
                 email: "",
             },
             isEditButtonLoading: false,
-            nameRules: [(v) => !!v || "Name is required"],
-            emailRules: [
-                (v) => !!v || "E-mail is required",
-                (v) => /.+@.+/.test(v) || "E-mail must be valid",
-            ],
+            validationRules: {
+                name,
+                email,
+            },
         };
     },
     computed: {

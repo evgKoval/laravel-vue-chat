@@ -8,7 +8,7 @@
                 <v-col cols="12">
                     <v-text-field
                         v-model="form.email"
-                        :rules="emailRules"
+                        :rules="validationRules.email"
                         label="E-mail"
                         required
                     ></v-text-field>
@@ -17,7 +17,7 @@
                     <v-text-field
                         type="password"
                         v-model="form.password"
-                        :rules="passwordRules"
+                        :rules="validationRules.password"
                         label="Password"
                         required
                     ></v-text-field>
@@ -32,6 +32,15 @@
                     >
                         Login
                     </v-btn>
+                    <v-btn
+                        class="mt-3"
+                        color="primary"
+                        text
+                        small
+                        to="/forgot-password"
+                    >
+                        Forgotten password?
+                    </v-btn>
                 </v-col>
             </v-row>
         </v-container>
@@ -41,6 +50,7 @@
 <script>
 import { mapMutations, mapActions } from "vuex";
 import AuthService from "@/services/AuthService";
+import { email, password } from "@/utils/validationRules";
 
 export default {
     data() {
@@ -51,16 +61,10 @@ export default {
                 email: "",
                 password: "",
             },
-            emailRules: [
-                (v) => !!v || "E-mail is required",
-                (v) => /.+@.+/.test(v) || "E-mail must be valid",
-            ],
-            passwordRules: [
-                (v) => !!v || "Password is required",
-                (v) =>
-                    v.length >= 8 ||
-                    "Password must be equal or more than 8 characters",
-            ],
+            validationRules: {
+                email,
+                password,
+            },
         };
     },
     methods: {
