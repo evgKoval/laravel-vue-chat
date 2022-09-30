@@ -24,8 +24,13 @@
             </v-main>
         </template>
 
-        <v-snackbar v-model="isSnackbarShown" :timeout="-1" right color="red">
-            {{ errorMessage }}
+        <v-snackbar
+            v-model="isSnackbarShown"
+            :timeout="-1"
+            right
+            :color="getSnackbarColor"
+        >
+            {{ notification.message }}
             <template v-slot:action="{ attrs }">
                 <v-btn text v-bind="attrs" @click="closeSnackbar">
                     Close
@@ -47,15 +52,33 @@ export default {
             "user",
             "isAppLoading",
             "isSnackbarShown",
-            "errorMessage",
+            "notification",
         ]),
+        getSnackbarColor() {
+            return this.notification.type === "error" ? "red" : "green";
+        },
+    },
+    mounted() {
+        this.showSnackbarIfUserJustVerified();
     },
     methods: {
         ...mapMutations({
             setSnackbarShown: "SET_SNACKBAR_SHOWN",
+            setNotification: "SET_NOTIFICATION",
         }),
         closeSnackbar() {
             this.setSnackbarShown(false);
+        },
+        showSnackbarIfUserJustVerified() {
+            const urlParams = new URLSearchParams(window.location.search);
+
+            if (urlParams.get("verified")) {
+                this.setSnackbarShown(true);
+                this.setNotification({
+                    type: "success",
+                    message: "Your email has been verified.",
+                });
+            }
         },
     },
 };

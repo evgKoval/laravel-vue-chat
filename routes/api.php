@@ -17,5 +17,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'getUser']);
-    Route::apiResource('/channels', ChannelController::class);
+
+    Route::middleware('verified')->group(function () {
+        Route::apiResource('/channels', ChannelController::class);
+    });
 });
