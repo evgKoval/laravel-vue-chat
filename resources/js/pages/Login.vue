@@ -66,7 +66,7 @@ export default {
     methods: {
         ...mapMutations({
             setSnackbarShown: "SET_SNACKBAR_SHOWN",
-            setErrorMessage: "SET_ERROR_MESSAGE",
+            setNotification: "SET_NOTIFICATION",
         }),
         ...mapActions(["getUser"]),
         async login() {
@@ -80,7 +80,10 @@ export default {
                     this.$router.push("/");
                 }
             } catch (error) {
-                this.setErrorMessage(error.data.message);
+                this.setNotification({
+                    type: "error",
+                    message: error.data.message,
+                });
                 this.setSnackbarShown(true);
             } finally {
                 this.isSubmitButtonLoading = false;

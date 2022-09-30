@@ -86,7 +86,7 @@ export default {
     methods: {
         ...mapMutations({
             setSnackbarShown: "SET_SNACKBAR_SHOWN",
-            setErrorMessage: "SET_ERROR_MESSAGE",
+            setNotification: "SET_NOTIFICATION",
         }),
         async register() {
             this.isSubmitButtonLoading = true;
@@ -95,7 +95,10 @@ export default {
                 await AuthService.registerUser(this.form);
                 this.$router.push("/");
             } catch (error) {
-                this.setErrorMessage(error.data.message);
+                this.setNotification({
+                    type: "error",
+                    message: error.data.message,
+                });
                 this.setSnackbarShown(true);
             } finally {
                 this.isSubmitButtonLoading = false;

@@ -10,7 +10,10 @@ const store = new Vuex.Store({
         user: null,
         isAppLoading: true,
         isSnackbarShown: false,
-        errorMessage: "",
+        notification: {
+            type: "",
+            message: "",
+        },
     },
     mutations: {
         SET_USER(state, user) {
@@ -27,9 +30,9 @@ const store = new Vuex.Store({
         SET_SNACKBAR_SHOWN(state, snackbarShown) {
             state.isSnackbarShown = snackbarShown;
         },
-        SET_ERROR_MESSAGE(state, message) {
-            state.errorMessage = message;
-        },
+        SET_NOTIFICATION(state, notification) {
+            state.notification = notification;
+        }
     },
     actions: {
         async getUser({ commit }) {
@@ -38,7 +41,10 @@ const store = new Vuex.Store({
                 commit("SET_USER", response.data.data);
                 return response.data.data;
             } catch (error) {
-                commit("SET_ERROR_MESSAGE", error.data.message);
+                commit("SET_NOTIFICATION", {
+                    type: "error",
+                    message: error.data.message
+                });
                 commit("SET_SNACKBAR_SHOWN", true);
             }
         },
@@ -52,7 +58,10 @@ const store = new Vuex.Store({
                     router.push({ path: "/login" });
                 }
             } catch (error) {
-                commit("SET_ERROR_MESSAGE", error.data.message);
+                commit("SET_NOTIFICATION", {
+                    type: "error",
+                    message: error.data.message
+                });
                 commit("SET_SNACKBAR_SHOWN", true);
             } finally {
                 commit("SET_APP_LOADING", false);
@@ -63,7 +72,10 @@ const store = new Vuex.Store({
                 await AuthService.updateUser(payload);
                 commit("SET_USER", payload);
             } catch (error) {
-                commit("SET_ERROR_MESSAGE", error.data.message);
+                commit("SET_NOTIFICATION", {
+                    type: "error",
+                    message: error.data.message
+                });
                 commit("SET_SNACKBAR_SHOWN", true);
             }
         }
@@ -78,9 +90,9 @@ const store = new Vuex.Store({
         isSnackbarShown(state) {
             return state.isSnackbarShown;
         },
-        errorMessage(state) {
-            return state.errorMessage;
-        },
+        notification(state) {
+            return state.notification;
+        }
     }
 });
 
